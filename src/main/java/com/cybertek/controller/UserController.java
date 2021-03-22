@@ -27,17 +27,18 @@ public class UserController {
 
         model.addAttribute("user", new UserDTO());
         model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
         //model.addAttribute("users", userService.findAll());
 
         return "/user/create";
     }
 
-//    @PostMapping("/create")
-//    public String insertUser(UserDTO user, Model model){
-//
-//        userService.save(user);
-//        return "redirect:/user/create";
-//    }
+    @PostMapping("/create")
+    public String insertUser(UserDTO user, Model model){
+
+        userService.save(user);
+        return "redirect:/user/create";
+    }
 //
 //    @GetMapping("/update/{username}") //different income request, that's why we put update
 //    public String editUser(@PathVariable("username") String username, Model model){

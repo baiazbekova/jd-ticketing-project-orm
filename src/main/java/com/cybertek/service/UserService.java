@@ -1,9 +1,10 @@
 package com.cybertek.service;
 
 import com.cybertek.dto.UserDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface UserService {
 
     List<UserDTO> listAllUsers();
