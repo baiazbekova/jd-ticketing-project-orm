@@ -39,24 +39,24 @@ public class UserController {
         userService.save(user);
         return "redirect:/user/create";
     }
-//
-//    @GetMapping("/update/{username}") //different income request, that's why we put update
-//    public String editUser(@PathVariable("username") String username, Model model){
-//
-//        model.addAttribute("user", userService.findByID(username));
-//        model.addAttribute("users", userService.findAll()); //it will give the completed table, no update yet, just populating
-//        model.addAttribute("roles", roleService.findAll());
-//
-//        return "/user/update";
-//    }
-//
-//    //will save edited info, or updated info
-//    @PostMapping("/update/{username}")
-//    public String updateUser(@PathVariable("username") String username, UserDTO user, Model model){
-//        userService.update(user);
-//        return "redirect:/user/create";
-//
-//    }
+
+    @GetMapping("/update/{username}") //different income request, that's why we put update
+    public String editUser(@PathVariable("username") String username, Model model){
+
+        model.addAttribute("user", userService.findByUserName(username));
+        model.addAttribute("users", userService.listAllUsers()); //it will give the completed table, no update yet, just populating
+        model.addAttribute("roles", roleService.listAllRoles());
+
+        return "/user/update";
+    }
+
+    //will save edited info, or updated info
+    @PostMapping("/update/{username}")
+    public String updateUser(@PathVariable("username") String username, UserDTO user, Model model){
+        userService.update(user);
+        return "redirect:/user/create";
+
+    }
 //
 //   @GetMapping("/delete/{username}")
 //    public String deleteUser(@PathVariable("username") String username, UserDTO user, Model model){
