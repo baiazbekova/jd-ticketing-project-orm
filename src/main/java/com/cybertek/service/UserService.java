@@ -14,4 +14,6 @@ public interface UserService {
     void delete(String username);
 
     void deleteByUsername(String username);
+
+    List<UserDTO> listAllByRole(String role);
 }
