@@ -1,6 +1,9 @@
 package com.cybertek.implementation;
 
 import com.cybertek.dto.ProjectDTO;
+import com.cybertek.entity.Project;
+import com.cybertek.enums.Status;
+import com.cybertek.mapper.ProjectMapper;
 import com.cybertek.repository.ProjectRepository;
 import com.cybertek.service.ProjectService;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,8 @@ import java.util.List;
 
 @Service
 public class ProjectServiceImpl  implements ProjectService {
+    private ProjectMapper projectMapper;
+
     @Override
     public ProjectDTO getByProjectCode(String code) {
         return null;
@@ -22,7 +27,10 @@ public class ProjectServiceImpl  implements ProjectService {
 
     @Override
     public ProjectDTO save(ProjectDTO dto) {
-        return null;
+       dto.setProjectStatus(Status.OPEN);
+       Project obj = projectMapper.convertToEntity(dto);
+
+       return null;
     }
 
     @Override
