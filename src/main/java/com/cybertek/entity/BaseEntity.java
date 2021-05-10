@@ -2,10 +2,7 @@ package com.cybertek.entity;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -25,7 +22,21 @@ public class BaseEntity {
     private LocalDateTime insertDateTime;
     private Long insertUserId;
     private LocalDateTime lastUpdatedDateTime;
-    private long lastUpdateUserId;
-
+    private Long lastUpdateUserId;
     private Boolean isDeleted=false;
+
+    @PrePersist
+    private void onPrePersist(){
+        this.insertDateTime=LocalDateTime.now();
+        this.lastUpdatedDateTime=LocalDateTime.now();
+        this.insertUserId=1L;
+        this.lastUpdateUserId=1L;
+    }
+
+    private void onPreUpdate()
+    {
+        this.lastUpdatedDateTime=LocalDateTime.now();
+        this.lastUpdateUserId=1L;
+    }
+
 }
