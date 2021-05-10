@@ -57,11 +57,11 @@ public class UserController {
         return "redirect:/user/create";
 
     }
-//
-//   @GetMapping("/delete/{username}")
-//    public String deleteUser(@PathVariable("username") String username, UserDTO user, Model model){
-//        userService.delete(user);
-//        return "redirect:/user/create";
-//    }
+
+   @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable("username") String username, UserDTO user, Model model){
+        userService.delete(username);
+        return "redirect:/user/create";
+    }
 
 }
