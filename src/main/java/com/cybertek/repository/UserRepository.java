@@ -13,5 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     void deleteByUsername (String username);
 
-    List<User> finidAllByRoleDescriptionIgnoreCase(String description);
+    List<User> findAllByRoleDescriptionIgnoreCase(String description);
 }
