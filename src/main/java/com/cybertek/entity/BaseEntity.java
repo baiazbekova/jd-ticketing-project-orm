@@ -26,6 +26,7 @@ public class BaseEntity {
     private LocalDateTime lastUpdatedDateTime;
     @Column (updatable = false)
     private Long lastUpdateUserId;
+
     private Boolean isDeleted=false;
 
     @PrePersist
@@ -36,6 +37,7 @@ public class BaseEntity {
         this.lastUpdateUserId=1L;
     }
 
+    @PreUpdate
     private void onPreUpdate()
     {
         this.lastUpdatedDateTime=LocalDateTime.now();
