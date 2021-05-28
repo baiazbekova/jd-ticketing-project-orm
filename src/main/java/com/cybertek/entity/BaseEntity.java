@@ -18,10 +18,13 @@ public class BaseEntity {
     //I want postgres to create one for me:
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column (nullable = false, updatable = false)
     private LocalDateTime insertDateTime;
+    @Column (nullable = false, updatable = false)
     private Long insertUserId;
+    @Column (updatable = false)
     private LocalDateTime lastUpdatedDateTime;
+    @Column (updatable = false)
     private Long lastUpdateUserId;
     private Boolean isDeleted=false;
 
