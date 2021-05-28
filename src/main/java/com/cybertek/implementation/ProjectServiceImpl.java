@@ -1,7 +1,6 @@
 package com.cybertek.implementation;
 
 import com.cybertek.dto.ProjectDTO;
-import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.Project;
 import com.cybertek.enums.Status;
 import com.cybertek.mapper.ProjectMapper;
@@ -29,7 +28,8 @@ public class ProjectServiceImpl  implements ProjectService {
 
     @Override
     public ProjectDTO getByProjectCode(String code) {
-        return null;
+        Project project = projectRepository.findByProjectCode(code);
+        return projectMapper.convertToDto(project);
     }
 
     @Override
@@ -45,14 +45,18 @@ public class ProjectServiceImpl  implements ProjectService {
     public Project save(ProjectDTO dto) {
        dto.setProjectStatus(Status.OPEN);
        Project obj = projectMapper.convertToEntity(dto);
-       obj.setAssignedManager(userMapper.convertToEntity(dto.getAssignedManager()));
+       //obj.setAssignedManager(userMapper.convertToEntity(dto.getAssignedManager()));
        Project project = projectRepository.save(obj);
        return project;
     }
 
     @Override
-    public ProjectDTO update(ProjectDTO dto) {
-        return null;
+    public void update(ProjectDTO dto) {
+        Project project = projectRepository.findByProjectCode(dto.getProjectCode());
+        Project convertedProject = projectMapper.convertToEntity(dto);
+        convertedProject.setId(project.getId());
+        convertedProject.setProjectStatus(project.getProjectStatus());
+        projectRepository.save(convertedProject);
     }
 
     @Override
