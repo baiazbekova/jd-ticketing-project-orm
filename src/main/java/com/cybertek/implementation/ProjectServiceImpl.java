@@ -1,12 +1,15 @@
 package com.cybertek.implementation;
 
 import com.cybertek.dto.ProjectDTO;
+import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.Project;
+import com.cybertek.entity.User;
 import com.cybertek.enums.Status;
 import com.cybertek.mapper.ProjectMapper;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.ProjectRepository;
 import com.cybertek.service.ProjectService;
+import com.cybertek.service.UserService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,13 @@ public class ProjectServiceImpl  implements ProjectService {
     private ProjectMapper projectMapper;
     private ProjectRepository projectRepository;
     private UserMapper userMapper;
+    private UserService userService;
 
-    public ProjectServiceImpl(ProjectMapper projectMapper, ProjectRepository projectRepository, UserMapper userMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, ProjectRepository projectRepository, UserMapper userMapper, UserService userService) {
         this.projectMapper = projectMapper;
         this.projectRepository = projectRepository;
         this.userMapper = userMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -71,5 +76,16 @@ public class ProjectServiceImpl  implements ProjectService {
         Project project = projectRepository.findByProjectCode(projectCode);
         project.setProjectStatus(Status.COMPLETE);
         projectRepository.save(project);
+    }
+
+    @Override
+    public List<ProjectDTO> listAllProjectDetails() {
+        UserDTO currentUserDTO = userService.findByUserName("java@cybertekschool.com");
+        User user = userMapper.convertToEntity(currentUserDTO);
+        List<Project> list = projectRepository.findAllByAssignedManager(user);
+        return list.stream().map(project -> {
+            ProjectDTO obj = projectMapper.convertToDto(project);
+            return obj;
+        }).collect(Collectors.toList());
     }
 }
